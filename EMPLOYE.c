@@ -3,8 +3,7 @@
 #include <string.h>
 #include "employe.h"
 
-// ? Vérification login/mot de passe
-void afficherCadre(const char* message, const char* couleur);
+// Verification login/mot de passe
 int oumayma(const char* login_saisie, const char* motDePasse) {
     int id;
     char nom[30], prenom[30], mdp[30], tache[30];
@@ -25,10 +24,10 @@ int oumayma(const char* login_saisie, const char* motDePasse) {
     return 0;
 }
 
-// ? Affichage d’un cadre simple
+// Affichage d'un cadre simple
 void afficherCadre(const char* message, const char* couleur) {
-    int lignes = 4, colonnes = 100,i,j;
-    for ( i = 0; i < lignes; i++) {
+    int lignes = 4, colonnes = 100, i, j;
+    for (i = 0; i < lignes; i++) {
         for (j = 0; j < colonnes; j++) {
             if (i == 0 || i == lignes - 1 || j == 0 || j == colonnes - 1) {
                 printf("%s*%s", couleur, RESET);
@@ -43,9 +42,9 @@ void afficherCadre(const char* message, const char* couleur) {
     }
 }
 
-// ? Affichage d’un cadre multi-lignes
+// Affichage dï¿½un cadre multi-lignes
 void afficherCadreMulti(const char* lignes[], int nbLignes, const char* couleur) {
-    int largeur = 100,i,j;
+    int largeur = 100, i, j;
     for (j = 0; j < largeur; j++) printf("%s*%s", couleur, RESET);
     printf("\n");
 
@@ -54,17 +53,17 @@ void afficherCadreMulti(const char* lignes[], int nbLignes, const char* couleur)
         printf("%s*%s", couleur, RESET);
         for (j = 0; j < espaces; j++) printf(" ");
         printf("%s%s%s", couleur, lignes[i], RESET);
-        for ( j = 0; j < largeur - 2 - espaces - strlen(lignes[i]); j++) printf(" ");
+        for (j = 0; j < largeur - 2 - espaces - strlen(lignes[i]); j++) printf(" ");
         printf("%s*%s\n", couleur, RESET);
     }
 
-    for ( j = 0; j < largeur; j++) printf("%s*%s", couleur, RESET);
+    for (j = 0; j < largeur; j++) printf("%s*%s", couleur, RESET);
     printf("\n");
 }
 
-// ? Affichage fiche employé
+// Affichage fiche employï¿½
 void afficherFicheEmploye(int id, const char* nom, const char* prenom, const char* mdp, const char* tache) {
-	#ifdef _WIN32
+    #ifdef _WIN32
         system("cls");
     #else
         system("clear");
@@ -75,21 +74,15 @@ void afficherFicheEmploye(int id, const char* nom, const char* prenom, const cha
     int i;
     sprintf(buffer[0], "ID        : %d", id);
     sprintf(buffer[1], "Nom       : %s", nom);
-    sprintf(buffer[2], "Prénom    : %s", prenom);
+    sprintf(buffer[2], "Prï¿½nom    : %s", prenom);
     sprintf(buffer[3], "Mot de passe : %s", mdp);
-    sprintf(buffer[4], "Tâche     : %s", tache);
-    for ( i = 0; i < 5; i++) lignes[i] = buffer[i];
+    sprintf(buffer[4], "Tï¿½che     : %s", tache);
+    for (i = 0; i < 5; i++) lignes[i] = buffer[i];
     afficherCadreMulti(lignes, 5, BLUE);
 }
 
-// ? Ajouter un employé
+// Ajouter un employï¿½
 void ajouterEmploye(int id, const char* nom, const char* prenom, const char* mdp, const char* tache) {
-	#ifdef _WIN32
-        system("cls");
-    #else
-        system("clear");
-    #endif
-
     FILE *fE = fopen("EMPLOYE.txt", "a");
     if (!fE) {
         afficherCadre("Erreur d'ouverture du fichier", RED);
@@ -97,11 +90,11 @@ void ajouterEmploye(int id, const char* nom, const char* prenom, const char* mdp
     }
     fprintf(fE, "%d %s %s %s %s\n", id, nom, prenom, mdp, tache);
     fclose(fE);
-    afficherCadre("Employé ajouté avec succès !", GREEN);
+    afficherCadre("Employï¿½ ajoutï¿½ avec succï¿½s !", GREEN);
     afficherFicheEmploye(id, nom, prenom, mdp, tache);
 }
 
-// ? Supprimer un employé
+// Supprimer un employï¿½
 void supprimerEmploye(int idASupprimer) {
     FILE *fE = fopen("EMPLOYE.txt", "r");
     FILE *temp = fopen("TEMP.txt", "w");
@@ -118,18 +111,20 @@ void supprimerEmploye(int idASupprimer) {
             fprintf(temp, "%d %s %s %s %s\n", id, nom, prenom, mdp, tache);
         } else {
             trouve = 1;
-            afficherCadre("Employé supprimé avec succès !", RED);
+            afficherCadre("Employï¿½ supprimï¿½ avec succï¿½s !", RED);
             afficherFicheEmploye(id, nom, prenom, mdp, tache);
         }
     }
 
-    fclose(fE); fclose(temp);
-    remove("EMPLOYE.txt"); rename("TEMP.txt", "EMPLOYE.txt");
+    fclose(fE);
+    fclose(temp);
+    remove("EMPLOYE.txt");
+    rename("TEMP.txt", "EMPLOYE.txt");
 
-    if (!trouve) afficherCadre("Aucun employé trouvé avec cet ID.", YELLOW);
+    if (!trouve) afficherCadre("Aucun employï¿½ trouvï¿½ avec cet ID.", YELLOW);
 }
 
-// ? Modifier la tâche d’un employé
+// Modifier la tï¿½che dï¿½un employï¿½
 void changerTacheEmploye(int idAModifier, const char* nouvelleTache) {
     FILE *fE = fopen("EMPLOYE.txt", "r");
     FILE *temp = fopen("TEMP.txt", "w");
@@ -145,16 +140,17 @@ void changerTacheEmploye(int idAModifier, const char* nouvelleTache) {
         if (id == idAModifier) {
             fprintf(temp, "%d %s %s %s %s\n", id, nom, prenom, mdp, nouvelleTache);
             trouve = 1;
-            afficherCadre("Tâche modifiée avec succès !", CYAN);
+            afficherCadre("Tï¿½che modifiï¿½e avec succï¿½s !", CYAN);
             afficherFicheEmploye(id, nom, prenom, mdp, nouvelleTache);
         } else {
             fprintf(temp, "%d %s %s %s %s\n", id, nom, prenom, mdp, tache);
         }
     }
 
-    fclose(fE); fclose(temp);
-    remove("EMPLOYE.txt"); rename("TEMP.txt", "EMPLOYE.txt");
+    fclose(fE);
+    fclose(temp);
+    remove("EMPLOYE.txt");
+    rename("TEMP.txt", "EMPLOYE.txt");
 
-    if (!trouve) afficherCadre("Aucun employé trouvé avec cet ID.", YELLOW);
+    if (!trouve) afficherCadre("Aucun employï¿½ trouvï¿½ avec cet ID.", YELLOW);
 }
-
