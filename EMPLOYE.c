@@ -82,16 +82,29 @@ void afficherFicheEmploye(int id, const char* nom, const char* prenom, const cha
 }
 
 // Ajouter un employ�
-void ajouterEmploye(int id, const char* nom, const char* prenom, const char* mdp, const char* tache) {
+#include <stdbool.h> // pour utiliser bool
+
+int ajouterEmploye(int id, const char* nom, const char* prenom, const char* mdp, const char* tache) {
     FILE *fE = fopen("EMPLOYE.txt", "a");
     if (!fE) {
         afficherCadre("Erreur d'ouverture du fichier", RED);
-        exit(1);
+        return false; // échec
     }
-    fprintf(fE, "%d %s %s %s %s\n", id, nom, prenom, mdp, tache);
+
+    // Écriture dans le fichier
+    if (fprintf(fE, "%d %s %s %s %s\n", id, nom, prenom, mdp, tache) < 0) {
+        fclose(fE);
+        afficherCadre("Erreur lors de l'écriture", RED);
+        return false; // échec
+    }
+
     fclose(fE);
-    afficherCadre("Employ� ajout� avec succ�s !", GREEN);
+
+    // Confirmation visuelle
+    afficherCadre("Employé ajouté avec succès !", GREEN);
     afficherFicheEmploye(id, nom, prenom, mdp, tache);
+
+    return true; // succès
 }
 
 // Supprimer un employ�
@@ -153,4 +166,57 @@ void changerTacheEmploye(int idAModifier, const char* nouvelleTache) {
     rename("TEMP.txt", "EMPLOYE.txt");
 
     if (!trouve) afficherCadre("Aucun employ� trouv� avec cet ID.", YELLOW);
+}
+#include <time.h>
+
+
+
+void prouverPresence(int idEmploye) {
+    FILE *f = fopen("presence.txt", "a");
+    if (f == NULL) {
+        printf("Erreur : impossible d'ouvrir le fichier presence.txt\n");
+        return;
+    }
+
+    // Récupérer la date actuelle
+    time_t t = time(NULL);
+    struct tm tm = *localtime(&t);
+
+    // Format AAAA-MM-JJ
+    fprintf(f, "%04d-%02d-%02d Employe %d present\n",
+            tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, idEmploye);
+
+    fclose(f);
+    printf("Présence enregistrée pour l'employé %d à la date du jour.\n", idEmploye);
+}
+
+
+#include <string.h>
+
+void voirPresenceParDate(const char* dateRecherche) {
+    FILE *f = fopen("presence.txt", "r"); // ouvrir en lecture
+    if (f == NULL) {
+        printf("Erreur : impossible d'ouvrir le fichier presence.txt\n");
+        return;
+    }
+
+    char ligne[256];
+    int trouve = 0;
+
+    printf("Présences pour la date %s :\n", dateRecherche);
+
+    // Lire chaque ligne du fichier
+    while (fgets(ligne, sizeof(ligne), f)) {
+        // Vérifie si la ligne contient la date recherchée
+        if (strstr(ligne, dateRecherche) != NULL) {
+            printf("%s", ligne); // afficher la ligne trouvée
+            trouve = 1;
+        }
+    }
+
+    if (!trouve) {
+        printf("Aucune présence trouvée pour cette date.\n");
+    }
+
+    fclose(f);
 }

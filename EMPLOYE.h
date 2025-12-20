@@ -1,7 +1,7 @@
 #ifndef EMPLOYE_H
-#define EMPLOYE_H
+#define EMPLOYE_H 
 
-// ? Structure de base pour un employÈ
+// Structure de base pour un employ√©
 typedef struct {
     int id;
     char nom[30];
@@ -10,7 +10,7 @@ typedef struct {
     char tache[30];
 } Employe;
 
-// ? Couleurs ANSI pour affichage
+// Couleurs ANSI pour affichage
 #define RESET   "\033[0m"
 #define RED     "\033[1;31m"
 #define GREEN   "\033[1;32m"
@@ -18,17 +18,21 @@ typedef struct {
 #define BLUE    "\033[1;34m"
 #define CYAN    "\033[1;36m"
 
-// ? Fonctions de vÈrification
+// Fonctions de v√©rification
 int oumayma(const char* login, const char* motDePasse);
 
-// ? Fonctions d'affichage
+// Fonctions d'affichage
 void afficherCadre(const char* message, const char* couleur);
 void afficherCadreMulti(const char* lignes[], int nbLignes, const char* couleur);
 void afficherFicheEmploye(int id, const char* nom, const char* prenom, const char* mdp, const char* tache);
 
-// ? Fonctions de gestion des employÈs
-void ajouterEmploye(int id, const char* nom, const char* prenom, const char* mdp, const char* tache);
+// Fonctions de gestion des employ√©s
+int ajouterEmploye(int id, const char* nom, const char* prenom, const char* mdp, const char* tache);
 void supprimerEmploye(int idASupprimer);
 void changerTacheEmploye(int idAModifier, const char* nouvelleTache);
+
+// Fonctionnalit√©s suppl√©mentaires
+void prouverPresence(int idEmploye);
+void voirPresenceParDate(const char* dateRecherche);
 
 #endif

@@ -31,5 +31,5 @@ typedef struct {
 void afficherToutesVoitures(void);
 void supprimerVoiture(int idSupp);
 void modifierVoiture(int idModif);
-
+void ajouterVoiture();
 #endif
