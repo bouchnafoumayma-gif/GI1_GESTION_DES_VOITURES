@@ -3,13 +3,23 @@
 #include <string.h>
 #include "employe.h"
 #include "voiture.h"
+#include "interface.h"
+#include "reservation.h"
+#include <conio.h>
+#include "client.h"
 
 int main() {
     char login[30], motdepasse[30];
     int result, choix, id;
     char nom[30], prenom[30], mdp[30], tache[30];
     char date[20]; // ✅ Déclaration ajoutée pour le menu admin (case 4)
-
+    int A;
+    printf("BONJOUR!");
+    printf("POUR UNE CONNEXION EN TANT QUE EMPLOYE CLIQUE SUR 1 EN TANT QUE CLIENT CLIQUE SUR 2");
+    scanf("%d",&A);
+    //////////////
+    switch(A){
+        case 1:{
     do {
         // Connexion
         afficherCadre("DONNER VOTRE IDENTIFIANT!", CYAN);
@@ -166,6 +176,51 @@ int main() {
         }
 
     } while (!result);
+break;
+ case 2:
+    const char *menuPrincipal[] = {"Inscription", "Connexion", "Quitter"};
+    int chois;
+
+    while (1) {
+        chois = afficherMenuCentre("MENU PRINCIPAL", menuPrincipal, 3);
+        switch (chois) {
+            case 0:
+                inscriptionClient();
+                break;
+            case 1: {
+                int id = connexionClient();
+                if (id != -1) {
+                    const char *menuClient[] = {
+                        "Voir mon profil",
+                        "Modifier mes informations",
+                        "Faire une réservation",
+                        "Voir mes réservations",
+                        "Annuler une réservation",
+                        "Déconnexion"
+                    };
+                    int choixClient;
+                    do {
+                        choixClient = afficherMenuCentre("ESPACE CLIENT", menuClient, 6);
+                        switch (choixClient) {
+                            case 0: voirProfilClient(id); break;
+                            case 1: modifierProfilClient(id); break;
+                            case 2: faireReservation(id); break;
+                            case 3: afficherReservationsClient(id); break;
+                            case 4: annulerReservation(id); break;
+                        }
+                    } while (choixClient != 5);
+                }
+                break;
+            }
+            case 2:
+                afficherCadreCentre(YELLOW "Merci d’avoir utilisé notre application !" RESET);
+                _getch();
+          
+    }
+}
+  break;
+}
+}
 
     return 0;
 }
