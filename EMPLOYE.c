@@ -87,21 +87,21 @@ void afficherFicheEmploye(int id, const char* nom, const char* prenom, const cha
 int ajouterEmploye(int id, const char* nom, const char* prenom, const char* mdp, const char* tache) {
     FILE *fE = fopen("EMPLOYE.txt", "a");
     if (!fE) {
-        afficherCadre("Erreur d'ouverture du fichier", RED);
+        afficherCadre("Erreur d ouverture du fichier", RED);
         return false; // échec
     }
 
     // Écriture dans le fichier
     if (fprintf(fE, "%d %s %s %s %s\n", id, nom, prenom, mdp, tache) < 0) {
         fclose(fE);
-        afficherCadre("Erreur lors de l'écriture", RED);
+        afficherCadre("Erreur lors de l ecriture", RED);
         return false; // échec
     }
 
     fclose(fE);
 
     // Confirmation visuelle
-    afficherCadre("Employé ajouté avec succès !", GREEN);
+    afficherCadre("Employe ajoute avec succes !", GREEN);
     afficherFicheEmploye(id, nom, prenom, mdp, tache);
 
     return true; // succès
@@ -112,7 +112,7 @@ void supprimerEmploye(int idASupprimer) {
     FILE *fE = fopen("EMPLOYE.txt", "r");
     FILE *temp = fopen("TEMP.txt", "w");
     if (!fE || !temp) {
-        afficherCadre("Erreur d'ouverture du fichier", RED);
+        afficherCadre("Erreur d ouverture du fichier", RED);
         exit(1);
     }
 
@@ -124,7 +124,7 @@ void supprimerEmploye(int idASupprimer) {
             fprintf(temp, "%d %s %s %s %s\n", id, nom, prenom, mdp, tache);
         } else {
             trouve = 1;
-            afficherCadre("Employ� supprim� avec succ�s !", RED);
+            afficherCadre("Employe supprimee avec succes !", RED);
             afficherFicheEmploye(id, nom, prenom, mdp, tache);
         }
     }
@@ -134,7 +134,7 @@ void supprimerEmploye(int idASupprimer) {
     remove("EMPLOYE.txt");
     rename("TEMP.txt", "EMPLOYE.txt");
 
-    if (!trouve) afficherCadre("Aucun employ� trouv� avec cet ID.", YELLOW);
+    if (!trouve) afficherCadre("Aucun employee trouve avec cet ID.", YELLOW);
 }
 
 // Modifier la t�che d�un employ�
@@ -142,7 +142,7 @@ void changerTacheEmploye(int idAModifier, const char* nouvelleTache) {
     FILE *fE = fopen("EMPLOYE.txt", "r");
     FILE *temp = fopen("TEMP.txt", "w");
     if (!fE || !temp) {
-        afficherCadre("Erreur d'ouverture du fichier", RED);
+        afficherCadre("Erreur d ouverture du fichier", RED);
         exit(1);
     }
 
@@ -153,7 +153,7 @@ void changerTacheEmploye(int idAModifier, const char* nouvelleTache) {
         if (id == idAModifier) {
             fprintf(temp, "%d %s %s %s %s\n", id, nom, prenom, mdp, nouvelleTache);
             trouve = 1;
-            afficherCadre("T�che modifi�e avec succ�s !", CYAN);
+            afficherCadre("Tache modifie avec succees !", CYAN);
             afficherFicheEmploye(id, nom, prenom, mdp, nouvelleTache);
         } else {
             fprintf(temp, "%d %s %s %s %s\n", id, nom, prenom, mdp, tache);
@@ -183,11 +183,11 @@ void prouverPresence(int idEmploye) {
     struct tm tm = *localtime(&t);
 
     // Format AAAA-MM-JJ
-    fprintf(f, "%04d-%02d-%02d Employe %d present\n",
-            tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, idEmploye);
+    fprintf(stdout, RED "%04d-%02d-%02d Employe %d present\n" RESET,
+        tm.tm_year + 1900, tm.tm_mon + 1, tm.tm_mday, idEmploye);
 
     fclose(f);
-    printf("Présence enregistrée pour l'employé %d à la date du jour.\n", idEmploye);
+    printf(RED"Prsence enregistre pour l employe %d a la date du jour.\n",RESET, idEmploye);
 }
 
 
@@ -203,7 +203,7 @@ void voirPresenceParDate(const char* dateRecherche) {
     char ligne[256];
     int trouve = 0;
 
-    printf("Présences pour la date %s :\n", dateRecherche);
+    printf(YELLOW"Presences pour la date %s :\n",RESET, dateRecherche);
 
     // Lire chaque ligne du fichier
     while (fgets(ligne, sizeof(ligne), f)) {
@@ -215,7 +215,7 @@ void voirPresenceParDate(const char* dateRecherche) {
     }
 
     if (!trouve) {
-        printf("Aucune présence trouvée pour cette date.\n");
+        printf(RED"Aucune presence trouvee pour cette date.\n"RESET);
     }
 
     fclose(f);

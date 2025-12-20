@@ -14,9 +14,34 @@ int main() {
     char nom[30], prenom[30], mdp[30], tache[30];
     char date[20]; // ✅ Déclaration ajoutée pour le menu admin (case 4)
     int A;
-    printf("BONJOUR!");
-    printf("POUR UNE CONNEXION EN TANT QUE EMPLOYE CLIQUE SUR 1 EN TANT QUE CLIENT CLIQUE SUR 2");
+    /// LOGO
+
+    printf(BLUE);
+    printf("    _      _       _        _       _                   _                     \n");
+    printf("   / \\    | |     | |      | |     | |                 | |                    \n");
+    printf("  / _ \\   | |     | |      | |     | |     __ _ _ __ __| | ___ _ __ ___ ___   \n");
+    printf(" / ___ \\  | |___  | |___   | |___  | |__  / _` | '__/ _` |/ _ \\ '__/ __/ _ \\  \n");
+    printf("/_/   \\_\\ |_____| |_____|  |_____| |____|\\__,_|_|  \\__,_|\\___/|  |\\___\\___/  \n");
+    printf("                                                            | |              \n");
+    printf("                                                            |_|              \n");
+    printf(RESET);
+
+    printf(BLUE "\nBienvenue dans ALLOCATION_HOUSE !\n\n" RESET);
+    getchar();
+#ifdef _WIN32
+    system("cls");   // Windows
+#else
+    system("clear"); // Linux / Mac
+#endif
+    ///PAGE1
+    printf(BLUE"*******************************************BONJOUR!******************************\n"RESET);
+    printf(BLUE"*********POUR UNE CONNEXION EN TANT QUE EMPLOYE CLIQUE SUR 1 EN TANT QUE CLIENT CLIQUE SUR 2**********\n"RESET);
     scanf("%d",&A);
+    #ifdef _WIN32
+    system("cls");   // Windows
+#else
+    system("clear"); // Linux / Mac
+#endif
     //////////////
     switch(A){
         case 1:{
@@ -38,7 +63,7 @@ int main() {
 
         if (result == 1) {
             // ===== MENU EMPLOYE : Gestion des voitures + présence =====
-            afficherCadre("Connexion réussie en tant qu'EMPLOYE !", GREEN);
+            afficherCadre("Connexion reussie en tant qu EMPLOYE !", GREEN);
 
             do {
                 printf(CYAN "\n=== Menu Gestion des Voitures ===\n" RESET);
@@ -53,31 +78,56 @@ int main() {
 
                 switch (choix) {
                     case 1:
-                        printf("Entrer votre ID employé : ");
+                    #ifdef _WIN32
+                            system("cls");
+                        #else
+                            system("clear");
+                        #endif
+                        printf(YELLOW"Entrer votre ID employe : "RESET);
                         scanf("%d", &id);
                         prouverPresence(id);
                         break; // ✅ Ajout du break pour éviter le “fall-through”
 
                     case 2:
+                    #ifdef _WIN32
+                            system("cls");
+                        #else
+                            system("clear");
+                        #endif
                         printf(GREEN "\n--- Liste des voitures ---\n" RESET);
                         afficherToutesVoitures();
                         break;
 
                     case 3:
-                        printf("Entrez l'ID de la voiture à supprimer : ");
+                    #ifdef _WIN32
+                            system("cls");
+                        #else
+                            system("clear");
+                        #endif
+                        printf("Entrez l ID de la voiture à supprimer : ");
                         scanf("%d", &id);
                         printf(RED "\n--- Suppression ---\n" RESET);
                         supprimerVoiture(id);
                         break;
 
                     case 4:
-                        printf("Entrez l'ID de la voiture à modifier : ");
+                    #ifdef _WIN32
+                            system("cls");
+                        #else
+                            system("clear");
+                        #endif
+                        printf("Entrez l ID de la voiture a modifier : ");
                         scanf("%d", &id);
                         printf(BLUE "\n--- Modification ---\n" RESET);
                         modifierVoiture(id);
                         break;
 
                     case 5:
+                    #ifdef _WIN32
+                            system("cls");
+                        #else
+                            system("clear");
+                        #endif
                         ajouterVoiture();
                     
                         break;
@@ -87,20 +137,20 @@ int main() {
                         break;
 
                     default:
-                        printf(RED "Choix invalide, réessayez.\n" RESET);
+                        printf(RED "Choix invalide, reessayez.\n" RESET);
                 }
 
             } while (choix != 0);
 
         } else if (result == 2) {
             // ===== MENU ADMIN =====
-            afficherCadre("Connexion réussie en tant qu'ADMIN !", YELLOW);
+            afficherCadre("Connexion reussie en tant qu ADMIN !", YELLOW);
 
             const char* menu[] = {
                 "1. AJOUTER UN EMPLOYE",
                 "2. SUPPRIMER UN EMPLOYE",
-                "3. CHANGER LA TÂCHE D'UN EMPLOYE",
-                "4. Voir présences par date",
+                "3. CHANGER LA TaCHE D'UN EMPLOYE",
+                "4. Voir presences par date",
                 "5. QUITTER"
             };
 
@@ -116,16 +166,16 @@ int main() {
                         #else
                             system("clear");
                         #endif
-                        afficherCadre("AJOUT D'UN EMPLOYE", GREEN);
+                        afficherCadre("AJOUT D UN EMPLOYE", GREEN);
                         printf("ID : "); scanf("%d", &id);
                         printf("Nom : "); scanf("%s", nom);
-                        printf("Prénom : "); scanf("%s", prenom);
+                        printf("Prenom : "); scanf("%s", prenom);
                         printf("Mot de passe : "); scanf("%s", mdp);
-                        printf("Tâche : "); scanf("%s", tache);
+                        printf("Tache : "); scanf("%s", tache);
                         if (ajouterEmploye(id, nom, prenom, mdp, tache)) {
-                            printf(GREEN "✔ Employé ajouté et confirmé.\n" RESET);
+                            printf(GREEN "✔ Employe ajoute et confirme.\n" RESET);
                         } else {
-                            printf(RED "✖ Échec de l’ajout.\n" RESET);
+                            printf(RED "✖ Echec de l ajout.\n" RESET);
                         }
                         break;
 
@@ -135,8 +185,8 @@ int main() {
                         #else
                             system("clear");
                         #endif
-                        afficherCadre("SUPPRESSION D'UN EMPLOYE", RED);
-                        printf("Entrer l'ID de l'employé à supprimer : ");
+                        afficherCadre("SUPPRESSION D UN EMPLOYE", RED);
+                        printf("Entrer l ID de l employe a supprimer : ");
                         scanf("%d", &id);
                         supprimerEmploye(id);
                         break;
@@ -148,9 +198,9 @@ int main() {
                             system("clear");
                         #endif
                         afficherCadre("MODIFICATION DE LA TÂCHE", YELLOW);
-                        printf("Entrer l'ID de l'employé à modifier : ");
+                        printf("Entrer l ID de l employe a modifier : ");
                         scanf("%d", &id);
-                        printf("Nouvelle tâche : ");
+                        printf("Nouvelle tache : ");
                         scanf("%s", tache);
                         changerTacheEmploye(id, tache);
                         break;
