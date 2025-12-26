@@ -33,7 +33,7 @@ int main() {
     printf("||/_/     \\ |_____| |_____|  |_____| |____| \\__,_|_|  \\__,|\\___/|  |\\___\\___/              ||\n");
     printf("||                                                                                         ||\n");
 
-    // Texte blanc à l'intérieur du cadre
+    // Texte blanc ï¿½ l'intï¿½rieur du cadre
     printf(WHITE);
     printf("||                                 ALLOCATION_HOUSE                                        ||\n");
     printf(BLUE "||-----------------------------------------------------------------------------------------||\n" WHITE);
@@ -61,7 +61,7 @@ int main() {
    /* printf(BLUE"*******************************************BONJOUR!******************************\n"RESET);
     printf(BLUE"*********POUR UNE CONNEXION EN TANT QUE EMPLOYE CLIQUE SUR 1 EN TANT QUE CLIENT CLIQUE SUR 2**********\n"RESET);
     scanf("%d", &A);*/
-  // PAGE 1 : Menu principal stylé avec curseur
+  // PAGE 1 : Menu principal stylï¿½ avec curseur
 int choixMenu = 0; // 0 = Employe, 1 = Client, 2 = Quitter
 char touche;
 
@@ -85,20 +85,20 @@ do {
 
     printf(BLUE);
     printf("||-----------------------------------------------------------------------------------------||\n");
-    printf("||      Utilisez les flèches pour naviguer et Entrée pour valider votre choix.             ||\n");
+    printf("||      Utilisez les flï¿½ches pour naviguer et Entrï¿½e pour valider votre choix.             ||\n");
     printf("=============================================================================================\n");
     printf(RESET);
 
     touche = _getch();
-    if (touche == 72) { // flèche haut
+    if (touche == 72) { // flï¿½che haut
         if (choixMenu > 0) choixMenu--;
-    } else if (touche == 80) { // flèche bas
+    } else if (touche == 80) { // flï¿½che bas
         if (choixMenu < 2) choixMenu++;
     }
 
-} while (touche != 13); // 13 = Entrée
+} while (touche != 13); // 13 = Entrï¿½e
 
-A = choixMenu + 1; // 1 = Employé, 2 = Client, 3 = Quitter
+A = choixMenu + 1; // 1 = Employï¿½, 2 = Client, 3 = Quitter
 #ifdef _WIN32
 system("cls");
 #else
@@ -173,7 +173,7 @@ system("clear");
 #else
                                 system("clear");
 #endif
-                                printf("Entrez l ID de la voiture à supprimer : ");
+                                printf("Entrez l ID de la voiture ï¿½ supprimer : ");
                                 scanf("%d", &id);
                                 printf(RED "\n--- Suppression ---\n" RESET);
                                 supprimerVoiture(id);
@@ -185,7 +185,7 @@ system("clear");
 #else
                                 system("clear");
 #endif
-                                printf("Entrez l ID de la voiture à modifier : ");
+                                printf("Entrez l ID de la voiture ï¿½ modifier : ");
                                 scanf("%d", &id);
                                 printf(BLUE "\n--- Modification ---\n" RESET);
                                 modifierVoiture(id);
@@ -273,12 +273,22 @@ system("clear");
                                 break;
 
                             case 4:
+                            #ifdef _WIN32
+                           system("cls");
+                           #else
+                           system("clear");
+                            #endif
                                 printf("Entrer la date (AAAA-MM-JJ) : ");
                                 scanf("%s", date);
                                 voirPresenceParDate(date);
                                 break;
 
                             case 5:
+                            #ifdef _WIN32
+system("cls");
+#else
+system("clear");
+#endif
                                 afficherCadre("Retour au menu principal", CYAN);
                                 break;
 
@@ -332,7 +342,7 @@ system("clear");
                         break;
                     }
                     case 2:
-                        afficherCadreCentre(YELLOW "Merci d’avoir utiliser notre application !" RESET);
+                        afficherCadreCentre(YELLOW "Merci dï¿½avoir utiliser notre application !" RESET);
 #ifdef _WIN32
                         _getch();
 #else
